@@ -1,0 +1,1 @@
+Se podría implementar una PriorityQueue donde los elementos sean objetos que contengan la información del cliente (número de ticket, etc.) y su nivel de prioridad. El criterio de comparación de la cola de prioridad se basaría en este nivel de prioridad, dando preferencia a las prioridades más altas.
