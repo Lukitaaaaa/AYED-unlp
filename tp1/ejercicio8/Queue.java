@@ -9,27 +9,19 @@ public class Queue<T> extends Sequence{
 	protected List<T> data;
 	
 	public Queue() {
-		this.data = new ArrayList<>();
+		this.data = new ArrayList<T>();
 	}
 
 	public void enqueue(T dato) {
-		data.add(this.size(),dato);
+		data.add(dato);
 	}
 	
 	public T dequeue(){
-		T dato = this.head();
-		data.remove(this.size()-1);
-		return dato;
-		
+		return data.remove(0);
 	}
 	
 	public T head() {
-		T dato = null;
-		if(this.isEmpty())
-			System.out.print("Error: cola vacia");
-		else
-			dato = data.get(this.size()-1);
-		return dato;
+		return data.get(0);
 	}
 	
 	public int size() {
@@ -37,11 +29,15 @@ public class Queue<T> extends Sequence{
 	}
 	
 	public boolean isEmpty() {
-		return data.isEmpty();
+		return data.size() == 0;
 	}
 
 	@Override
 	public String toString() {
-		return "Queue [data=" + data + "]";
+		String str = "[";
+		for(T d: data)
+	            str = str + d +", ";
+		str = str.substring(0, str.length()-2)+"]";
+		return str;
 	}
 }
