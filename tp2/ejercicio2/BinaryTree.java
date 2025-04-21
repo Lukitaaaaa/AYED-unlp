@@ -1,5 +1,8 @@
 package tp2.ejercicio2;
 
+//import tp1.ejercicio8.Queue;
+import java.util.*;
+
 public class BinaryTree <T> {
 	
 	private T data;
@@ -108,7 +111,29 @@ public class BinaryTree <T> {
 	
 	// 0<=n<=m
 	public void entreNiveles(int n, int m){
-			
+		
+        if(this.isEmpty() || n<0 || m<n) 
+        	return;
+        Queue<BinaryTree<T>> q = new LinkedList<>();
+        q.add(this);
+        int nivel = 0;
+        while(!q.isEmpty()){
+            int cantNodosNivel = q.size();
+            for(int i=0; i<cantNodosNivel; i++){
+                BinaryTree<T> nodoAct = q.remove();
+                if(nivel >= n && nivel <= m){
+                    System.out.print( " | "  + nodoAct.getData() +  " | ");
+                    if(nodoAct.hasLeftChild()) q.add(nodoAct.getLeftChild());
+                    if(nodoAct.hasRightChild()) q.add(nodoAct.getRightChild());
+                }
+                else {
+                    if (nodoAct.hasLeftChild()) q.add(nodoAct.getLeftChild());
+                    if (nodoAct.hasRightChild()) q.add(nodoAct.getRightChild());
+                }
+            }
+            System.out.println(); 
+            nivel++;
+        }
 	}
 	
 	public void imprimirArbol() {
@@ -134,12 +159,8 @@ public class BinaryTree <T> {
         ab.imprimirArbol();
         System.out.println();
         System.out.println(ab.contarHojas());
-        //System.out.println("Arbol original: ");
-        //System.out.println("Arbol espejo: ");
-        //BinaryTree<Integer> abEspejo = ab.espejo();
-        //abEspejo.imprimirArbol();
-        //System.out.println("Impresion Arbol por niveles 0 y 1");
-        //ab.entreNiveles(0, 2);
+        System.out.println();
+        ab.entreNiveles(1, 2);
     }
 		
 }
