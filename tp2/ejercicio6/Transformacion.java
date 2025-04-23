@@ -10,28 +10,8 @@ public class Transformacion {
 		this.arbol = arbol;
 	}
 	
-	public BinaryTree<Integer> suma2() {
-        suma2(this.arbol);
-        return this.arbol;
-    }
     
-    private int suma2(BinaryTree<Integer> tree) {
-        int aux = 0;
-        if(tree.isLeaf()) {
-            aux = tree.getData();
-            tree.setData(0);
-            return aux;
-        }
-        if(tree.hasLeftChild())
-            aux += suma2(tree.getLeftChild());
-        if(tree.hasRightChild())
-            aux += suma2(tree.getRightChild());
-        int data = tree.getData();
-        tree.setData(aux);
-        return data + aux;
-    }
-    
-    public BinaryTree<Integer> suma(){
+	public BinaryTree<Integer> suma(){
 		sumaAux(this.arbol);
 		return arbol;
 	}
