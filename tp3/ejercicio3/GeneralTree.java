@@ -75,27 +75,39 @@ public class GeneralTree<T>{
 	}
 	
 	public int nivel(T dato){
-		int aux = 0; 
-		boolean esta = false;
+		int aux = 0;
+		if(this.getData() == dato) {
+			return 0;
+		}
+		
+		if(this.hasChildren())
+			
+			children= this.getChildren();
+			for(int i=0; i<children.size(); i++)
+				if(children.get(i).getData() == dato)
+					return 1;
+			for (GeneralTree<T> child: children) {
+				aux += child.altura();
+			}
+				
+		return aux;
+	}
+
+	public int ancho(){
+		int max = 0;
 		GeneralTree<T> tree_aux;
 		Queue<GeneralTree<T>> queue = new Queue<GeneralTree<T>>();
 		queue.enqueue(this);
-		while (!queue.isEmpty() || !esta) {
-			aux++;
+		while (!queue.isEmpty()) {
+			if(queue.size() >= max)
+				max = queue.size(); 
 			tree_aux = queue.dequeue();
-			if(tree_aux.getData() == dato)
-				esta = true;
 			List<GeneralTree<T>> children = tree_aux.getChildren();
 			for (GeneralTree<T> child: children) {
 				queue.enqueue(child);
 			}
 		}
-		return aux;
-	}
-
-	public int ancho(){
-		
-		return 0;
+		return max;
 	}
 	
 	public static void main(String[] args) {
@@ -117,8 +129,8 @@ public class GeneralTree<T>{
 		GeneralTree<Integer> a = new GeneralTree<Integer>(0, childen);
 		
 		System.out.println("Altura: "+a.altura());
-		System.out.println("Nivel: "+a.nivel(31));
-		//System.out.println("Altura: "+a.altura());
+		System.out.println("Nivel: "+a.nivel(21));
+		System.out.println("Ancho: "+a.ancho());
 		
 	}
 }
