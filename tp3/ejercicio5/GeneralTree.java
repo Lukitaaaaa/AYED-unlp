@@ -1,7 +1,11 @@
 package tp3.ejercicio5;
 
 import java.util.LinkedList;
+
 import java.util.List;
+
+import tp1.ejercicio8.Queue;
+
 
 public class GeneralTree<T>{
 
@@ -57,17 +61,72 @@ public class GeneralTree<T>{
 			children.remove(child);
 	}
 	
-	public int altura() {	 
+	public boolean esAncestro(T a, T b) {
+		
+		boolean estaAntesB= false;
+		GeneralTree<T> nodo = null;
+		GeneralTree<T> tree_aux;
+		Queue<GeneralTree<T>> queue = new Queue<GeneralTree<T>>();
+		queue.enqueue(this);
+		while (!queue.isEmpty()&& (!estaAntesB) && nodo == null) {
 			
-		return 0;
+			tree_aux = queue.dequeue();
+			System.out.println(tree_aux.getData());
+			if(tree_aux.getData() == b)
+				estaAntesB = true;
+			if(tree_aux.getData() == a && (!estaAntesB)) {
+				nodo = tree_aux;
+				System.out.println("ESTA EL ANCESTRO");
+			}
+			List<GeneralTree<T>> children = tree_aux.getChildren();
+			for (GeneralTree<T> child: children) {
+				queue.enqueue(child);
+			}
+		}
+		
+		return (!estaAntesB) ? this.esAncestro(nodo, a, b) : false;
 	}
 	
-	public int nivel(T dato){
-		return 0;
-	  }
-
-	public int ancho(){
+	private boolean esAncestro(GeneralTree<T> aux, T a, T b) {
 		
-		return 0;
+		boolean estaB = false;
+		GeneralTree<T> tree_aux;
+		Queue<GeneralTree<T>> queue = new Queue<GeneralTree<T>>();
+		queue.enqueue(aux);
+		while (!queue.isEmpty()) {
+			
+			tree_aux = queue.dequeue();
+			System.out.println(tree_aux.getData());
+			if(tree_aux.getData() == b)
+				return true;
+			List<GeneralTree<T>> children = tree_aux.getChildren();
+			for (GeneralTree<T> child: children) {
+				queue.enqueue(child);
+			}
+		}
+		
+		return estaB;
+	}
+	
+	public static void main(String[] args) {
+		GeneralTree<Integer> a1 = new GeneralTree<Integer>(1);
+		List<GeneralTree<Integer>> children2 = new LinkedList<GeneralTree<Integer>>();
+		children2.add(new GeneralTree<Integer>(21));
+		children2.add(new GeneralTree<Integer>(22));
+		children2.add(new GeneralTree<Integer>(23));
+		
+		GeneralTree<Integer> a2 = new GeneralTree<Integer>(2, children2);
+		List<GeneralTree<Integer>> children3 = new LinkedList<GeneralTree<Integer>>();
+		children3.add(new GeneralTree<Integer>(31));
+		children3.add(new GeneralTree<Integer>(32));
+		
+		GeneralTree<Integer> a3 = new GeneralTree<Integer>(3, children3);
+		List<GeneralTree<Integer>> childen = new LinkedList<GeneralTree<Integer>>();
+		childen.add(a1);childen.add(a2);childen.add(a3);
+		
+		GeneralTree<Integer> a = new GeneralTree<Integer>(0, childen);
+		
+		System.out.println(a.esAncestro(2, 22));
+		
 	}
 }
